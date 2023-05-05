@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const placeSchema = new mongoose.Schema({
   owner: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
   },

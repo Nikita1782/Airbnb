@@ -1,30 +1,38 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import AddressLink from '../components/AddressLink';
-import BookingWidget from '../components/BookingWidget';
-import PlaceGallery from '../components/PlaceGallery';
-import Spinner from '../components/Spinner';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import AddressLink from "../components/AddressLink";
+import BookingWidget from "../components/BookingWidget";
+import PlaceGallery from "../components/PlaceGallery";
+import Spinner from "../components/Spinner";
+import { getItemFromLocalStorage } from "../utils";
 
 const PlacePage = () => {
   const { id } = useParams();
   const [place, setPlace] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
     if (!id) {
-      return '';
+      return "";
     }
 
     setLoading(true);
 
     const getPlace = async () => {
       const { data } = await axios.get(`/places/${id}`);
-      console.log(id);
       setPlace(data.place);
       setLoading(false);
     };
     getPlace();
+
+    const token = getItemFromLocalStorage("token");
+    if (!token) {
+      setIsLogged(false);
+    } else {
+      setIsLogged(true);
+    }
   }, [id]);
 
   if (loading) {
@@ -51,9 +59,8 @@ const PlacePage = () => {
           Check-in: {place.checkIn} <br /> Check-out: {place.checkOut} <br />
           Max number of guests: {place.maxGuests}
         </div>
-        <div>
-          <BookingWidget place={place} />
-        </div>
+
+        <div>{isLogged ? <BookingWidget place={place} /> : <></>}</div>
       </div>
       <div className="bg-white -mx-8 px-8 py-8 border-t">
         <div>

@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import AccountNav from '../components/AccountNav';
-import axios from 'axios';
-import AddressLink from '../components/AddressLink';
-import BookingDates from '../components/BookingDates';
-import PlaceGallery from '../components/PlaceGallery';
-import Spinner from '../components/Spinner';
-import PlaceCard from '../components/PlaceCard';
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import AccountNav from "../components/AccountNav";
+import axios from "axios";
+import AddressLink from "../components/AddressLink";
+import BookingDates from "../components/BookingDates";
+import PlaceGallery from "../components/PlaceGallery";
+import Spinner from "../components/Spinner";
+import PlaceCard from "../components/PlaceCard";
 
 const BookedPlacesPage = () => {
   const { id } = useParams();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (id) {
       const getBookings = async () => {
-        const { data } = await axios.get('/bookings');
-        if(data.error){
-          toast.error(data.error.message)
+        const { data } = await axios.get("/bookings");
+        if (data.error) {
+          toast.error(data.error.message);
         }
         setBookings(data);
         setLoading(false);
@@ -35,7 +36,7 @@ const BookedPlacesPage = () => {
       <AccountNav />
       {bookings.length > 0 ? (
         bookings.map((booking) => (
-          <PlaceCard place={booking.place} key={booking._id} />
+          <PlaceCard place={booking?.place} key={booking._id} />
         ))
       ) : (
         <div className="flex flex-col gap-4">
@@ -45,7 +46,7 @@ const BookedPlacesPage = () => {
           </p>
           <div className="">
             <button className="font-semibold border border-black px-4 py-2 rounded-lg bg-transparent hover:bg-slate-100 hover:transition-all">
-              Start planning
+              <Link to="/"> Start planning</Link>
             </button>
           </div>
         </div>

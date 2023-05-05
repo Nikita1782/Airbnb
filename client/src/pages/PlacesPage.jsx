@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import AccountNav from '../components/AccountNav';
-import { getItemFromLocalStorage } from '../utils';
-import Spinner from '../components/Spinner';
-import PlaceCard from '../components/PlaceCard';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import AccountNav from "../components/AccountNav";
+import { getItemFromLocalStorage } from "../utils";
+import Spinner from "../components/Spinner";
+import PlaceCard from "../components/PlaceCard";
 
 const PlacesPage = () => {
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = getItemFromLocalStorage('token');
+    const token = getItemFromLocalStorage("token");
     const getPlaces = async () => {
       try {
-        const { data } = await axios.get('/places/user-places', {
+        const { data } = await axios.get("/places/user-places", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -38,7 +38,7 @@ const PlacesPage = () => {
       <div className="text-center ">
         <Link
           className="inline-flex gap-1 bg-primary text-white py-2 px-6 rounded-full"
-          to={'/account/places/new'}
+          to={"/account/places/new"}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
